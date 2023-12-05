@@ -1,0 +1,12 @@
+header {
+    background-color: rgba(0,0,0,0.9);
+    padding: 10px;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+    margin-bottom: 100px;
+    z-index: 9999;
+}
