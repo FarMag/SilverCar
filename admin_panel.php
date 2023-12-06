@@ -37,11 +37,11 @@
     }
 
     $post_id = $_POST["id"];
-    $query = "SELECT * FROM CarInfo WHERE ID = '{$post_id}'";
+    $query = "SELECT * FROM CarInfo WHERE ID = $post_id";
 
     $result = $conn->query($query);
     if ($result->num_rows > 0){
-      while($row = $result->fetch_assoc()){
+      while ($row = mysqli_fetch_assoc($result)) {
         $id = $_POST['id'];           
         $name = $row['Name'];
         $price = $row['Price'];
@@ -60,10 +60,10 @@
       }
     }
     else{
-      echo "0 Rows was found((((";
+      echo "0 Rows was found";
     }
 
-    $conn->close();
+    
   }
 
 
@@ -86,7 +86,7 @@
   <h1>Административная панель</h1>
 
   <form method="POST" action="">
-    <input type="hidden" name="id" value="<?php echo $row['ID']; ?>">
+    <input type="hidden" name="id" value="<?php if (!empty($row['ID'])) echo $row['ID']; ?>">
     <table>
       <tr>
         <td>ID:</td>
@@ -158,6 +158,7 @@
     </table>
   </form>
 
+  <?php $conn->close(); ?>
 
 
 
