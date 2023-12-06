@@ -17,6 +17,7 @@
                 if (!empty($_SESSION["user"]["role"])): ?>
             <li><a href="/account.php" class="login-button">Кабинет пользователя</a></li>
         <?php endif; else: ?>
+            <li><a href="/registration.php" class="regist-button">Регистрация</a></li>
             <li><a href="/login.php" class="login-button">Войти</a></li>
         <?php  endif;?>
 
