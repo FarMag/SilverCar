@@ -28,9 +28,9 @@
 
 <title class="registration-title">Зарегистрироваться</title>
 
-<?php require "blocks/header.php" ?>
+<?php require "blocks/header.php"?>
 
-<body class="body">
+<body class="register-body">
     <div class="container">
         <h1 class="registration-registration">Регистрация</h1>
         <form id="register" class="input-group">
@@ -38,7 +38,7 @@
             <input class="input-registration-email" type="text" placeholder="Email" required>
             <input class="input-registration-password" type="password" placeholder="Пароль" required>
             <input class="input-registration-accept_password" type="text" placeholder="Подтверждение пароля" required>
-            <button  type="button" class="register-button">Зарегистрироваться</button>
+            <button class="register-button" type="submit" onclick="window.location.href='/account.php'">Зарегистрироваться</button>
         </form>
     </div>
 </body>
