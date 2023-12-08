@@ -30,7 +30,7 @@
     $users = require_once 'users.php';
 
     $errors = [];
-    if (!empty($_SESSION['user'])){
+    if (!empty($_SESSION['user'])){ 
         header('Location: account.php');
     }
 
@@ -70,14 +70,11 @@
 
 </head>
 
-
 <?php require "blocks/header.php" ?>
-
 
 <body class="login-body">
     <div class="container">
         <h1 class="login-text">Вход</h1>
-        <a class="register" href="/registration.php">Регистрация</a>
         <form id="login" class="input-group" method="POST">
             <!-- <input type="text" class="login-email" placeholder="Email" id="email" name="email" required /> -->
             <input type="email" class="login-email" placeholder="Email" id="email" name="email" />
@@ -88,6 +85,7 @@
                     <li><?= $error ?></li>
                 <?php endforeach; ?>
             </ul>
+            <a class="register" href="/registration.php">Нет аккаунта? Создайте его!</a>
         </form>
         
     </div>
