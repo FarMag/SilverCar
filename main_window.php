@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = 'localhost';
 $username = 'root'; 
 $password = '';  
@@ -14,12 +15,14 @@ if (!$conn) {
 <!DOCTYPE html>
 <html>
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link href="css\style.css" type="text/css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="css/main_window_style.css">
     <link rel="stylesheet" type="text/css" href="css/header_style.css">
     <link rel="stylesheet" type="text/css" href="css/footer_style.css">
+    <!-- <car onclick="location.href='car_window.php';">Redirect to another site</div> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <style>
         
@@ -28,51 +31,48 @@ if (!$conn) {
     <title>SilverCar - Салон поддержанных автомобилей</title>
 </head>
 
-<?php require "header.php" ?>
+<?php require "blocks/header.php" ?>
 
 <body>
     
 <?php
-            $query = "SELECT * FROM CarInfo";
-            // $query_c = "COUNT(*) FROM CarInfo";
-            $result = mysqli_query($conn, $query);
-            // $result_c = mysqli_query($conn, $query_c);
-            while ($row = mysqli_fetch_assoc($result)) {
-                
-                $id = $row['ID'];           
-                $name = $row['Name'];
-                $price = $row['Price'];
+    $query = "SELECT * FROM CarInfo";
+    $result = mysqli_query($conn, $query);
 
-                $query_pic = "SELECT Pic1 FROM CarPictures cp JOIN CarInfo ci ON ci.ID = cp.CarID WHERE ci.ID = $id";
-                
-                echo"<div class='container'>
-                <div class='car'>
-                <table border>
-                    <tr>
-                        <td width=700px; height=200px;>";
-                        $result_pic = $conn->query($query_pic);
-                        if ($result_pic->num_rows > 0) {
-                            $row_pic = $result_pic->fetch_assoc();
-                            $pic = $row_pic['Pic1'];
-                        } else {
-                        echo "Нет данных";
-                        }
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['ID'];
+        $name = $row['Name'];
+        $price = $row['Price'];
+        $query_pic = "SELECT Pic1 FROM CarPictures cp JOIN CarInfo ci ON ci.ID = cp.CarID WHERE ci.ID = $id";
+        
+        echo "<div class='container'>
+                <a href='car_window.php? id=$id' style='text-decoration: none;'> <!-- Добавляем ссылку с параметром id -->
+                <div class='car' id='$id'>
+                    <table>
+                        <tr>
+                            <td width='700px' height='200px'>";
+        $result_pic = $conn->query($query_pic);
+        if ($result_pic->num_rows > 0) {
+            $row_pic = $result_pic->fetch_assoc();
+            $pic = $row_pic['Pic1'];
+        } else {
+            echo "Нет данных";
+        }
 
-                        echo "<img src='$pic' alt='$name' />
-                        </td>
-                    </tr>
-                    <tr><td><h2>$name</h2></td></tr>
-                    <tr><td><h3>". number_format($price, 0, '.', ' '). " ₽</h3></td></tr>  
-                
-                </table>
-                <br>
-                
-                
+        echo "<img src='$pic' alt='$name' />
+                            </td>
+                        </tr>
+                        <tr><td><h2>$name</h2></td></tr>
+                        <tr><td><h3>" . number_format($price, 0, '.', ' ') . " ₽</h3></td></tr>  
+                    </table>
+                    <br>
                 </div>
-            </div>";
-            }
-            mysqli_close($conn);
-            ?>
+            </a>
+        </div>";
+    }
+            
+    mysqli_close($conn);
+?>
 
 
     <!-- <div class="container">
@@ -107,10 +107,12 @@ if (!$conn) {
         <a href="connect-modal.php" class="btn-modal-conn">Связаться</a>
         </div>
     </div> -->
-    <?php require "footer.php" ?>
+    
+    <?php require "blocks/footer.php" ?>
 </body>
 </html>
 
 <?php
 //Ваш PHP код для обработки данных и отправки заказа
 ?>
+
