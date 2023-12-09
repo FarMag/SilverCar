@@ -39,10 +39,12 @@
             if ($conn->query($query)){
                 echo "Вы успешно зарегистрировались на сайте <br />";
                 header('Location: main_window.php');
+                $_SESSION['user'] = ['email' => $_POST['reg-email']];
             }
             else {
                 $errors[] = 'Произошла ошибка при регистрации';
             }
+            $conn->close(); 
         }
         else{
             $errors[] = 'Произошла неизвестная ошибка';
