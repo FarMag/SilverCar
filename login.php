@@ -1,7 +1,8 @@
  <?php 
     session_start();
-
     $errors = [];
+
+    /*$errors = [];
     if (!empty($_SESSION['user'])){
         header('Location: account.php');
     }
@@ -14,6 +15,55 @@
         }
         else{
             $errors[] = 'Неверный логин или пароль';
+        }
+    }*/
+
+    if (!empty($_SESSION['user'])){
+        header('Location: account.php');
+    }
+
+    if(isset($_POST['log-but'])){
+        if ($_POST['email'] == '' || $_POST['password'] == ''){
+            $errors[] = 'Вы ввели не все данные';
+        }
+        else{
+            $db_host = 'localhost';
+            $db_user = 'root';
+            $db_pass = ''; 
+            $db_name = 'SilverCarDB';
+
+            $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+
+            if (!$conn) {
+                die('Ошибка подключения к базе данных:' . mysqli_connect_error());
+            }
+            else{
+                echo "Есть подключение к БД <br />";
+            }
+
+            $Email = $_POST['email'];
+            $Password = $_POST['password'];
+            $md5pass = md5($Password);
+
+            $query = "SELECT ID FROM Users where Email = '$Email' AND Password = '$md5pass'";
+
+            $result = $conn->query($query);
+            if ($result->num_rows == 1) {
+                header('Location: main_window.php');
+                $_SESSION['user'] = ['email' => $_POST['reg-email']];
+            } else {
+                $errors[] = 'Пользователь не найден';
+            }
+            $conn->close(); 
+
+            /*if ($conn->query($query)){
+                echo "Вы успешно зарегистрировались на сайте <br />";
+                header('Location: main_window.php');
+                $_SESSION['user']['email'] = $Email;
+            }
+            else {
+                $errors[] = 'Произошла ошибка при регистрации';
+            }*/
         }
     }
 ?>
@@ -30,7 +80,7 @@
     $users = require_once 'users.php';
 
     $errors = [];
-    if (!empty($_SESSION['user'])){ 
+    if (!empty($_SESSION['user'])){
         header('Location: account.php');
     }
 
@@ -70,22 +120,24 @@
 
 </head>
 
+
 <?php require "blocks/header.php" ?>
+
 
 <body class="login-body">
     <div class="container">
         <h1 class="login-text">Вход</h1>
-        <form id="login" class="input-group" method="POST">
+        <a class="register" href="/registration.php">Регистрация</a>
+        <form id="login" class="input-group" method="POST" action="">
             <!-- <input type="text" class="login-email" placeholder="Email" id="email" name="email" required /> -->
-            <input type="email" class="login-email" placeholder="Email" id="email" name="email" />
-            <input type="password" class="input-login-password" placeholder="Пароль" id="password" name="password" required />
-            <button class="login-button1" type="submit" onclick="window.location.href='/account.php'">Войти</button>
+            <input type="text" class="login-email" placeholder="Email" id="email" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; else echo '' ?>"/>
+            <input type="password" class="input-login-password" placeholder="Пароль" id="password" name="password" value="<?php if(!empty($_POST['password'])) echo $_POST['password']; else echo '' ?>"/>
+            <button class="login-button1" type="submit" name="log-but" onclick="window.location.href='/account.php'">Войти</button>
             <ul>
                 <?php foreach($errors as $error): ?>
                     <li><?= $error ?></li>
                 <?php endforeach; ?>
             </ul>
-            <a class="register" href="/registration.php">Нет аккаунта? Создайте его!</a>
         </form>
         
     </div>
