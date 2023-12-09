@@ -59,6 +59,19 @@
       echo "В БД уже существует машина с таким ID (CarInfo) <br />";
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     $CarID = $_POST['ID'];
 
     if(!empty($_POST['Pic1']))
@@ -86,8 +99,6 @@
     else
       $Pic5 = NULL;
 
-    $query = "INSERT INTO CarPictures (ID, CarID, Pic1, Pic2, Pic3, Pic4, Pic5) VALUES ($ID, $CarID, '$Pic1', '$Pic2', '$Pic3', '$Pic4', '$Pic5')";
-
     /*if ($conn->query($query)){
       echo "Данные успешно добавлены в таблицу CarPictures <br />";
     }
@@ -114,13 +125,26 @@
     }*/
 
     //$query = "INSERT INTO CarPictures (CarID, Pic1, Pic2, Pic3, Pic4, Pic5) VALUES ($CarID, '$Pic1', '$Pic2', '$Pic3', '$Pic4', '$Pic5')";
+    $query_carPictures = "SELECT ID FROM CarPictures WHERE CarID = $ID";
+    $result_carPictures = $conn->query($query_carPictures);
+    if ($result_carPictures->num_rows > 0) {
+      echo "В БД уже существует машина с таким ID (CarPictures) <br />";
+    } else {
+      $query = "INSERT INTO CarPictures (CarID, Pic1, Pic2, Pic3, Pic4, Pic5) VALUES ($CarID, '$Pic1', '$Pic2', '$Pic3', '$Pic4', '$Pic5')";
+      if ($conn->query($query)){
+        echo "Данные успешно добавлены в таблицу CarPictures <br />";
+      }
+      else {
+        echo "Ошибка, данные не добавлены в таблицу CarPictures <br />";
+      }
+    }
 
-    if ($conn->query($query)){
+    /*if ($conn->query($query)){
       echo "Данные успешно добавлены в таблицу CarPictures <br />";
     }
     else {
       echo "В БД уже существует машина с таким ID (CarPictures) <br />";
-    }
+    }*/
 
     $conn->close();
   } 
