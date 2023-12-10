@@ -50,7 +50,7 @@
             $result = $conn->query($query);
             if ($result->num_rows == 1) {
                 header('Location: main_window.php');
-                $_SESSION['user'] = ['email' => $_POST['reg-email']];
+                $_SESSION['user'] = ['email' => $_POST['email']];
             } else {
                 $errors[] = 'Пользователь не найден';
             }
