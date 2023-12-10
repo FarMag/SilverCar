@@ -50,7 +50,8 @@ if (isset($_POST['send_data'])){
               VALUES ('$Name', '$Email')";
 
     if ($conn->query($query)){
-        header('Location: main_window.php');
+        // header('Location: main_window.php');
+        header("Location:car_window.php?id=$id");
     }
     else {
         echo "error";
