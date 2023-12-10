@@ -7,10 +7,9 @@
     header('Location: main_window.php');
   }
 
-  if(isset($_POST['save']) && !empty($_POST['ID']) && !empty($_POST['Name']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
+  if(isset($_POST['save']) && !empty($_POST['ID']) && !empty($_POST['Brand']) && !empty($_POST['Model']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
                           && !empty($_POST['Mileage']) && !empty($_POST['Volume']) && !empty($_POST['Power']) && !empty($_POST['Engine_Type']) 
-                          && !empty($_POST['Transmission']) && !empty($_POST['Configuration']) && !empty($_POST['Pic1']) && !empty($_POST['Pic2'])
-                          && !empty($_POST['Pic3']) && !empty($_POST['Pic4']) && !empty($_POST['Pic5']) ){
+                          && !empty($_POST['Transmission']) && !empty($_POST['Configuration']) ){
     
     $db_host = 'localhost';
     $db_user = 'root';
@@ -28,7 +27,8 @@
 
     $id = $_POST['ID'];
     $ID = $_POST['ID'];
-    $Name = $_POST['Name'];
+    $Brand = $_POST['Brand'];
+    $Model = $_POST['Model'];
     $Price = $_POST['Price'];
     $Year = $_POST['Year'];
     $Mileage = $_POST['Mileage'];
@@ -38,7 +38,7 @@
     $Transmission = $_POST['Transmission'];
     $Configuration = $_POST['Configuration'];
 
-    $query = "UPDATE CarInfo SET ID = $ID, Name = '$Name', Price = $Price, Year = $Year, 
+    $query = "UPDATE CarInfo SET ID = $ID, Brand = '$Brand', Model = '$Model', Price = $Price, Year = $Year, 
     Mileage = $Mileage, Volume = $Volume, Power = $Power, Engine_Type = '$Engine_Type', 
     Transmission = '$Transmission', Configuration = '$Configuration' WHERE ID = $ID";
 
@@ -50,11 +50,26 @@
     }
 
 
-    $Pic1 = $_POST['Pic1'];
+    $Pic1_1 = $_POST['Pic1'];
+    $Pic1 = str_replace("\\", "\\\\", $Pic1_1);
+
+    $Pic2_1 = $_POST['Pic2'];
+    $Pic2 = str_replace("\\", "\\\\", $Pic2_1);
+
+    $Pic3_1 = $_POST['Pic3'];
+    $Pic3 = str_replace("\\", "\\\\", $Pic3_1);
+
+    $Pic4_1 = $_POST['Pic4'];
+    $Pic4 = str_replace("\\", "\\\\", $Pic4_1);
+
+    $Pic5_1 = $_POST['Pic5'];
+    $Pic5 = str_replace("\\", "\\\\", $Pic5_1);
+
+    /*$Pic1 = $_POST['Pic1'];
     $Pic2 = $_POST['Pic2'];
     $Pic3 = $_POST['Pic3'];
     $Pic4 = $_POST['Pic4'];
-    $Pic5 = $_POST['Pic5'];
+    $Pic5 = $_POST['Pic5'];*/
     $query = "UPDATE CarPictures SET CarID = $ID, Pic1 = '$Pic1', 
     Pic2 = '$Pic2', Pic3 = '$Pic3', Pic4 = '$Pic4', Pic5 = '$Pic5' WHERE CarID = $ID";
 
@@ -104,7 +119,8 @@
     if ($result->num_rows > 0){
       while ($row = mysqli_fetch_assoc($result)) {
         $id = $_POST['ID'];           
-        $name = $row['Name'];
+        $brand = $row['Brand'];
+        $model = $row['Model'];
         $price = $row['Price'];
         $year = $row['Year'];
         $mileage = $row['Mileage'];
@@ -185,8 +201,12 @@
         <td><input type="text" name="ID" id="ID" value="<?php if (!empty($id)) echo $id; else echo 'ID не найден' ?>"></td>
       </tr>
       <tr>
-        <td>Name:</td>
-        <td><input type="text" name="Name" value="<?php if (!empty($name)) echo $name; elseif(!empty($Name)) echo $Name; else echo '' ?>"></td>
+        <td>Brand:</td>
+        <td><input type="text" name="Brand" value="<?php if (!empty($brand)) echo $brand; elseif(!empty($Brand)) echo $Brand; else echo '' ?>"></td>
+      </tr>
+      <tr>
+        <td>Model:</td>
+        <td><input type="text" name="Model" value="<?php if (!empty($model)) echo $model; elseif(!empty($Model)) echo $Model; else echo '' ?>"></td>
       </tr>
       <tr>
         <td>Price:</td>
