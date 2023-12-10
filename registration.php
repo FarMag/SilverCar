@@ -23,15 +23,40 @@
             if (!$conn) {
                 die('Ошибка подключения к базе данных:' . mysqli_connect_error());
             }
-            else{
-                echo "Есть подключение к БД <br />";
+
+            $Email = $_POST['reg-email'];
+
+            $query = "SELECT ID FROM Users where Email = '$Email'";
+
+            $result = $conn->query($query);
+            if ($result->num_rows > 0) {
+                $errors[] = 'Пользователь с такой почте уже существует';
+            } else {
+                $Name = $_POST['reg-name'];
+                $Email = $_POST['reg-email'];
+                $Password = $_POST['reg-pass'];
+                $md5pass = md5($Password);
+                $Role_ID = 2;
+
+                $query = "INSERT INTO Users (Name, Email, Password, Role_ID)
+                VALUES ('$Name', '$Email', '$md5pass', $Role_ID)";
+
+                if ($conn->query($query)){
+                    echo "Вы успешно зарегистрировались на сайте <br />";
+                    header('Location: main_window.php');
+                    $_SESSION['user'] = ['email' => $_POST['reg-email']];
+                }
+                else {
+                    $errors[] = 'Произошла ошибка при регистрации';
+                }
+                $conn->close(); 
             }
 
-            $Name = $_POST['reg-name'];
+            /*$Name = $_POST['reg-name'];
             $Email = $_POST['reg-email'];
             $Password = $_POST['reg-pass'];
             $md5pass = md5($Password);
-            $Role_ID = 1;
+            $Role_ID = 2;
 
             $query = "INSERT INTO Users (Name, Email, Password, Role_ID)
               VALUES ('$Name', '$Email', '$md5pass', $Role_ID)";
@@ -44,7 +69,7 @@
             else {
                 $errors[] = 'Произошла ошибка при регистрации';
             }
-            $conn->close(); 
+            $conn->close(); */
         }
         else{
             $errors[] = 'Произошла неизвестная ошибка';
