@@ -16,14 +16,38 @@ if (isset($_POST['send_data'])){
         echo "Есть подключение к БД <br />";
     }
 
+
+    /*$query = "SELECT ID FROM Users WHERE Email = '$_SESSION['user']['email']'";*/
+    /*$sess_email = $_SESSION['user']['email'];
+    $query = "SELECT ID FROM Users WHERE Email = $sess_email";
+
+
+    $result = $conn->query($query);
+    if ($result->num_rows == 1) {
+        $data_from_db = $result->fetch_assoc();
+        $Name = $data_from_db['Name'];
+        $Email = $data_from_db['Email'];
+    }
+    else{
+        $Name = $_POST['modal-name'];
+        $Email = $_POST['modal-email'];
+    }*/
+
+
+
+
+
+
+
+
     $Name = $_POST['modal-name'];
     $Email = $_POST['modal-email'];
     if(isset($_GET["id"])){
         $id = $_GET["id"];
     }
 
-    $query = "INSERT INTO Request (CarID, User_Name, User_Email)
-              VALUES ($id, '$Name', '$Email')";
+    $query = "INSERT INTO Request (User_Name, User_Email)
+              VALUES ('$Name', '$Email')";
 
     if ($conn->query($query)){
         header('Location: main_window.php');
@@ -43,8 +67,28 @@ $conn = mysqli_connect($host, $username, $password, $dbname);
 if (!$conn) {
     die('Ошибка соединения с MySQL: ' . mysqli_connect_error());
 }
+
 if(isset($_GET["id"])){
     $id = $_GET["id"];
+}
+
+if(!empty($_SESSION['user']['email'])){
+    $sess_email = $_SESSION['user']['email'];
+    $query = "SELECT * FROM Users WHERE Email = '$sess_email'";
+
+    $result = $conn->query($query);
+
+    $data_from_db = $result->fetch_assoc();
+    $Name = $data_from_db["Name"];
+    $Email = $data_from_db["Email"];
+
+    // if ($result->num_rows == 1) {
+    //     $data_from_db = $result->fetch_assoc();
+    //     $Name = $data_from_db['Name'];
+    //     $Email = $data_from_db['Email'];
+    // }
+    // else
+    //     echo "Error";
 }
 
 ?>
@@ -228,10 +272,10 @@ if(isset($_GET["id"])){
                     <span class="close">&times;</span><br><br>
                     <h4>Заполните заявку на обратную связь</h4>
                     <form>
-                        <input type="text" placeholder="Имя*" name="modal-name" required>
+                        <input type="text" placeholder="Имя*" name="modal-name" value="<?php if(!empty($Name)) echo $Name; else echo '' ?>" required></input>
                         <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
 
-                        <input type="text" placeholder="Email*" name="modal-email" required>
+                        <input type="text" placeholder="Email*" name="modal-email" value="<?php if(!empty($Email)) echo $Email; else echo '' ?>" required>
                         <button type="submit" name="send_data">Отправить</button>
                     </form>
                     </div>
