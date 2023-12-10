@@ -1,5 +1,39 @@
 <?php
 session_start();
+
+if (isset($_POST['send_data'])){
+    $db_host = 'localhost';
+    $db_user = 'root';
+    $db_pass = ''; 
+    $db_name = 'SilverCarDB';
+
+    $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+
+    if (!$conn) {
+        die('Ошибка подключения к базе данных:' . mysqli_connect_error());
+    }
+    else{
+        echo "Есть подключение к БД <br />";
+    }
+
+    $Name = $_POST['modal-name'];
+    $Email = $_POST['modal-email'];
+    if(isset($_GET["id"])){
+        $id = $_GET["id"];
+    }
+
+    $query = "INSERT INTO Request (CarID, User_Name, User_Email)
+              VALUES ($id, '$Name', '$Email')";
+
+    if ($conn->query($query)){
+        header('Location: main_window.php');
+    }
+    else {
+        echo "error";
+    }
+    $conn->close(); 
+}
+
 $host = 'localhost';
 $username = 'root'; 
 $password = '';  
@@ -167,19 +201,46 @@ if(isset($_GET["id"])){
             mysqli_close($conn);
             ?>
             
-            <div id="modal" class="modal">
+
+
+
+
+
+
+            <!-- <div id="modal" class="modal">
                 <div class="modal-content">
                 <span class="close">&times;</span><br><br>
                 <h4>Заполните заявку на обратную связь</h4>
                 <form>
                     <input type="text" placeholder="Имя*" required>
-                    <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
+                    <-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> ->
 
                     <input type="text" placeholder="Телефон*" required>
                     <button type="submit">Отправить</button>
                 </form>
                 </div>
-            </div>
+            </div> -->
+
+
+            <form action="" method="POST">
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                    <span class="close">&times;</span><br><br>
+                    <h4>Заполните заявку на обратную связь</h4>
+                    <form>
+                        <input type="text" placeholder="Имя*" name="modal-name" required>
+                        <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
+
+                        <input type="text" placeholder="Email*" name="modal-email" required>
+                        <button type="submit" name="send_data">Отправить</button>
+                    </form>
+                    </div>
+                </div>
+            </form>
+
+
+
+
             <p class="p1">Описание</p>
             <p class="p2">Миссия компании SilverCar – сделать ваш автомобильный опыт незабываемым. Мы тщательно отбираем каждый автомобиль, чтобы уверенно предложить вам идеальные варианты из богатого ассортимента премиальных марок.
                 Вы можете быть уверены, что каждое предложение прошло тщательную проверку, чтобы удовлетворить самые высокие стандарты качества и надежности. Наша команда экспертов поможет вам выбрать автомобиль, отвечающий вашим потребностям и стилю жизни.
