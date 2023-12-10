@@ -91,6 +91,8 @@ p.p2{
 .car img{
     width: 100%;
     border-radius: 0px;
+    color: #ffffff;
+    background-color: #777;
 }
 
 .car h3 {
@@ -104,7 +106,18 @@ p.p2{
     -webkit-text-stroke: 0px black;
     margin-bottom: 20px;
 }
-
+h4 {
+    text-align: center;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px auto;
+    padding-bottom: 0;
+    margin: 5px;
+    -webkit-text-stroke: 0px black;
+    margin-bottom: 20px;
+}
 a{
     text-decoration: none;
 }
@@ -145,7 +158,7 @@ a{
 .regist-button:hover {
     background-color: #ffe390;
 } */
-button {
+.btn {
     background-color: #FFCF40;
     color: #FFFFFF;
     font-size: 26px;
@@ -158,23 +171,9 @@ button {
     transition: 0.5s;
     text-align: center;
 }
-button:hover {
+.btn:hover {
     background-color: #ffe390;
 }
-
-.car .btn-modal-conn{
-    background:#ff9500;
-    border:#e08403 solid 1px;
-    border-radius:3px;
-    color:#fff;
-    display:inline-block;
-    padding:8px 15px;
-    text-decoration:none;
-    text-align:center;
-    min-width:60px;
-    position:relative;
-    transition:color .1s ease}
-.btn-modal-conn:hover{background:#e08403}
 
 
 #slider_bl .wrapper{max-width:60em;margin:1em auto;position:relative;}
@@ -269,3 +268,64 @@ button:hover {
 @media only screen and (max-width:450px){#slider_bl .slider-wrapper{border-radius:0}
 #slider_bl .slider-wrapper .info{opacity:0}}
 @media only screen and (min-width:850px){#slider_bl body{padding:0 80px}}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 10px;
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  input {
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    display: block;
+    width: 80px;
+    margin-bottom: 10px;
+    padding: 15px 17px;
+    border-radius: 30px;
+  }
+  
+  button[type="submit"] {
+    background-color: #ffcf40;
+    color: white;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 26px;
+    font-weight: bold;
+    width: 100%;
+  }
+  
+input[type="text"] {
+    width: 90%;
+  }
