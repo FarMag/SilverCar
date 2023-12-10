@@ -1,4 +1,4 @@
- <?php 
+<?php 
     session_start();
     $errors = [];
 
@@ -45,12 +45,16 @@
             $Password = $_POST['password'];
             $md5pass = md5($Password);
 
-            $query = "SELECT ID FROM Users where Email = '$Email' AND Password = '$md5pass'";
+            $query = "SELECT * FROM Users where Email = '$Email' AND Password = '$md5pass'";
 
             $result = $conn->query($query);
             if ($result->num_rows == 1) {
+
+                $data_from_db = $result->fetch_assoc();
+                $Role = $data_from_db["Role_ID"];
+                $_SESSION['user'] = ['email' => $_POST['email'], 'role' => $Role];
                 header('Location: main_window.php');
-                $_SESSION['user'] = ['email' => $_POST['email']];
+                
             } else {
                 $errors[] = 'Пользователь не найден';
             }
