@@ -10,6 +10,17 @@ $conn = mysqli_connect($host, $username, $password, $dbname);
 if (!$conn) {
     die('Ошибка соединения с MySQL: ' . mysqli_connect_error());
 }
+
+$brandQuery = "SELECT DISTINCT Brand FROM CarInfo";
+$brandResult = mysqli_query($conn, $brandQuery);
+$brands = [];
+// $result_brand = $conn->query($brandQuery);
+
+if ($brandResult && mysqli_num_rows($brandResult) > 0) {
+    while ($row = mysqli_fetch_assoc($brandResult)) {
+        $brands[] = $row['Brand'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,16 +46,55 @@ if (!$conn) {
 
 <body>
     
+<!-- <select id="sort" style='    text-align: left;
+    font-size: 18px;
+    background-color: #FFCF40;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+    border-redius: 10px;'>
+    <option value="">Сначала старые публикации</option>
+    <option value="">Сначала новые публикации</option>
+    <option value="">Сначала дешевле</option>
+    <option value="">Сначала дороже</option>
+</select><br> -->
+
+ <form  action="main_window.html">
+ <div class="selectWrapper">
+  <select class="selectBox">
+  <option>Сначала старые публикации</option>
+  <option>Сначала новые публикации</option>
+  <option>Сначала дешевле</option>
+  <option>Сначала дороже</option>
+</select>
+</div>
+
+<button class='btn' id='open-modal-btn'>Фильтры</button>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                <span class="close">&times;</span><br><br>
+                <h4>Заполните заявку на обратную связь</h4>
+                <form>
+                    <input type="text" placeholder="Имя*" required>
+                    <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
+
+                    <input type="text" placeholder="Телефон*" required>
+                    <button type="submit">Отправить</button>
+                </form>
+                </div>
+            </div>
+ </form>
+ 
+
 <?php
     $query = "SELECT * FROM CarInfo";
     $result = mysqli_query($conn, $query);
 
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['ID'];
-        $name = $row['Name'];
+        $brand = $row['Brand'];
+        $model = $row['Model'];
         $price = $row['Price'];
         $query_pic = "SELECT Pic1 FROM CarPictures cp JOIN CarInfo ci ON ci.ID = cp.CarID WHERE ci.ID = $id";
-        
         echo "<div class='container'>
                 <a href='car_window.php? id=$id' style='text-decoration: none;'> <!-- Добавляем ссылку с параметром id -->
                 <div class='car' id='$id'>
@@ -54,15 +104,17 @@ if (!$conn) {
         $result_pic = $conn->query($query_pic);
         if ($result_pic->num_rows > 0) {
             $row_pic = $result_pic->fetch_assoc();
-            $pic = $row_pic['Pic1'];
-        } else {
-            echo "Нет данных";
-        }
+            $pic = !empty($row_pic['Pic1']) ? $row_pic['Pic1'] : 'images\дефолт\(1).jpg';
+            echo "<img src='$pic' alt='$name' />";
+        } 
+        // else {
+        //     echo "<img src='images\дефолт\(1).jpg' alt='$name' />";
+        // }
 
-        echo "<img src='$pic' alt='$name' />
-                            </td>
+        echo 
+                        "</td>
                         </tr>
-                        <tr><td><h2>$name</h2></td></tr>
+                        <tr><td><h2>$brand $model</h2></td></tr>
                         <tr><td><h3>" . number_format($price, 0, '.', ' ') . " ₽</h3></td></tr>  
                     </table>
                     <br>
@@ -116,3 +168,24 @@ if (!$conn) {
 //Ваш PHP код для обработки данных и отправки заказа
 ?>
 
+<script>
+    window.onload = function() {
+  var modal = document.getElementById("modal");
+  var openModalBtn = document.getElementById("open-modal-btn");
+  var closeModalBtn = document.getElementsByClassName("close")[0];
+
+  openModalBtn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  closeModalBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+};
+</script>
