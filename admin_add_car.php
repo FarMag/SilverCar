@@ -1,5 +1,11 @@
 <!-- Проверка нажата ли кнопка "Добавить автомобиль" -->
 <?php
+  session_start();
+  
+  if($_SESSION['user']['role'] != 1){
+    header('Location: main_window.php');
+  }
+
   if(isset($_POST['add_car']) && !empty($_POST['ID']) && !empty($_POST['Name']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
                           && !empty($_POST['Mileage']) && !empty($_POST['Volume']) && !empty($_POST['Power']) && !empty($_POST['Engine_Type']) 
                           && !empty($_POST['Transmission']) && !empty($_POST['Configuration']) ){
