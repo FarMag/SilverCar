@@ -46,7 +46,7 @@ if (isset($_POST['send_data'])){
         $id = $_GET["id"];
     }
 
-    $query = "INSERT INTO Request (CarID, User_Name, User_Email)
+    $query = "INSERT INTO Request (Car_ID, User_Name, User_Email)
               VALUES ($id, '$Name', '$Email')";
 
     if ($conn->query($query)){
