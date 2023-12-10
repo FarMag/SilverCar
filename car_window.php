@@ -6,7 +6,6 @@ $password = '';
 $dbname = 'SilverCarDB';  
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
-
 if (!$conn) {
     die('Ошибка соединения с MySQL: ' . mysqli_connect_error());
 }
@@ -15,6 +14,8 @@ if(isset($_GET["id"])){
 }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +41,8 @@ if(isset($_GET["id"])){
             $result = mysqli_query($conn, $query);
             // $result_c = mysqli_query($conn, $query_c);
             while ($row = mysqli_fetch_assoc($result)) {          
-                $name = $row['Name'];
+                $brand = $row['Brand'];
+                $model = $row['Model'];
                 $price = $row['Price'];
                 $year = $row['Year'];
                 $mileage = $row['Mileage'];
@@ -57,19 +59,28 @@ if(isset($_GET["id"])){
                 <table class='table'>
                     <tr>
                         <td width=700px;>";
+                        // $array_pic = ['images\дефолт\(1).jpg', 'images\дефолт\(1).jpg', 'images\дефолт\(1).jpg', 'images\дефолт\(1).jpg', 'images\дефолт\(1).jpg'];
                         $result_pic = $conn->query($query_pic);
+                        
                         if ($result_pic->num_rows > 0) {
                             $row_pic = $result_pic->fetch_assoc();
-                            $pic1 = $row_pic['Pic1'];
-                            $pic2 = $row_pic['Pic2'];
-                            $pic3 = $row_pic['Pic3'];
-                            $pic4 = $row_pic['Pic4'];
-                            $pic5 = $row_pic['Pic5'];
-                        } else {
-                        echo "Нет данных";
-                        }
-
-                        echo "<section id='slider_bl'>
+                            $pic1 = !empty($row_pic['Pic1']) ? $row_pic['Pic1'] : 'images\дефолт\(1).jpg';
+                            $pic2 = !empty($row_pic['Pic2']) ? $row_pic['Pic2'] : 'images\дефолт\(1).jpg';
+                            $pic3 = !empty($row_pic['Pic3']) ? $row_pic['Pic3'] : 'images\дефолт\(1).jpg';
+                            $pic4 = !empty($row_pic['Pic4']) ? $row_pic['Pic4'] : 'images\дефолт\(1).jpg';
+                            $pic5 = !empty($row_pic['Pic5']) ? $row_pic['Pic5'] : 'images\дефолт\(1).jpg';
+                            // $pic1 = $row_pic['Pic1'];
+                            // $pic2 = $row_pic['Pic2'];
+                            // $pic3 = $row_pic['Pic3'];
+                            // $pic4 = $row_pic['Pic4'];
+                            // $pic5 = $row_pic['Pic5'];
+                            // $array_pic = [$row_pic['Pic1'], $row_pic['Pic2'], $row_pic['Pic3'], $row_pic['Pic4'], $row_pic['Pic5']];
+                            // for ($i = 0; $i < 5; $i++){
+                            //     if($array_pic[i] == null){
+                            //         $array_pic[i] = 'images\дефолт\(1).jpg';
+                            //     }
+                            // }
+                            echo "<section id='slider_bl'>
                         <div class='wrapper'>
                             <input checked type=radio name='slider' id='slide1' />
                             <input type=radio name='slider' id='slide2' />
@@ -79,19 +90,19 @@ if(isset($_GET["id"])){
                             <div class='slider-wrapper'>
                                 <div class=inner>
                                 <article>
-                                    <img src='$pic1' />
+                                    <img src='$pic1' alt='$brand $model'/>
                                 </article>
                                 <article>
-                                    <img src='$pic2' />
+                                    <img src='$pic2' alt='$brand $model'/>
                                 </article>
                                 <article>
-                                    <img src='$pic3' />
+                                    <img src='$pic3' alt='$brand $model'/>
                                 </article>
                                 <article>
-                                    <img src='$pic4' />
+                                    <img src='$pic4' alt='$brand $model'/>
                                 </article>
                                 <article>
-                                    <img src='$pic5' />
+                                    <img src='$pic5' alt='$brand $model'/>
                                 </article>
                                 </div>
                             </div>
@@ -110,14 +121,27 @@ if(isset($_GET["id"])){
                                 <label for=slide5></label>
                             </div>
                         </div>
-                    </section>
-                    </td>";
-                    echo 
-                            "<td width=460px;>
+                    </section>";
+                        } else {
+                        echo "<section id='slider_bl'>
+                        <div class='wrapper'>
+                            <input checked type=radio name='slider' id='slide1' />
+                            <div class='slider-wrapper'>
+                                <div class=inner>
+                                <article>
+                                    <img src='images\дефолт\(1).jpg' alt='$name'/>
+                                </article></div>
+                                </div>";
+                                
+                        }
+
+                        
+                    echo "</td>
+                            <td width=460px;>
                             
                                 <div class='info_table'>
                                 <table margin-bottom=20px;>
-                                <tr class='info tr'></td><h2>$name</h2></td></tr>
+                                <tr class='info tr'></td><h2>$brand $model</h2></td></tr>
                                 <tr></td><h3>". number_format($price, 0, '.', ' '). " ₽</h3></td></tr>
                                 <tr><td width=250px>Год:</td><td>$year</td></tr>
                                 <tr><td>Пробег:</td><td>". number_format($mileage, 0, '.', ' '). " км</td></tr>
@@ -126,7 +150,7 @@ if(isset($_GET["id"])){
                                 <tr><td>Тип двигателя:</td><td>$engine_type</td></tr>
                                 <tr><td>Коробка передач:</td><td>$transmission</td></tr>
                                 <tr><td>Комплектация:</td><td>$configuration</td></tr>
-                                <tr><th colspan='2'><button>Связаться</button></th></tr>
+                                <tr><th colspan='2'><button class='btn' id='open-modal-btn'>Связаться</button></th></tr>
                                 </table>
                                 </div>
                             </td>
@@ -142,6 +166,20 @@ if(isset($_GET["id"])){
             }
             mysqli_close($conn);
             ?>
+            
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                <span class="close">&times;</span><br><br>
+                <h4>Заполните заявку на обратную связь</h4>
+                <form>
+                    <input type="text" placeholder="Имя*" required>
+                    <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
+
+                    <input type="text" placeholder="Телефон*" required>
+                    <button type="submit">Отправить</button>
+                </form>
+                </div>
+            </div>
             <p class="p1">Описание</p>
             <p class="p2">Миссия компании SilverCar – сделать ваш автомобильный опыт незабываемым. Мы тщательно отбираем каждый автомобиль, чтобы уверенно предложить вам идеальные варианты из богатого ассортимента премиальных марок.
                 Вы можете быть уверены, что каждое предложение прошло тщательную проверку, чтобы удовлетворить самые высокие стандарты качества и надежности. Наша команда экспертов поможет вам выбрать автомобиль, отвечающий вашим потребностям и стилю жизни.
@@ -188,3 +226,25 @@ if(isset($_GET["id"])){
 <?php
 //Ваш PHP код для обработки данных и отправки заказа
 ?>
+
+<script>
+    window.onload = function() {
+  var modal = document.getElementById("modal");
+  var openModalBtn = document.getElementById("open-modal-btn");
+  var closeModalBtn = document.getElementsByClassName("close")[0];
+
+  openModalBtn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  closeModalBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+};
+</script>
