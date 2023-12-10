@@ -46,8 +46,8 @@ if (isset($_POST['send_data'])){
         $id = $_GET["id"];
     }
 
-    $query = "INSERT INTO Request (User_Name, User_Email)
-              VALUES ('$Name', '$Email')";
+    $query = "INSERT INTO Request (CarID, User_Name, User_Email)
+              VALUES ($id, '$Name', '$Email')";
 
     if ($conn->query($query)){
         // header('Location: main_window.php');
