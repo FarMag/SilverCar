@@ -1,6 +1,12 @@
 
 <!-- Проверка нажата ли кнопка "Сохранить" -->
 <?php
+  session_start();
+  
+  if($_SESSION['user']['role'] != 1){
+    header('Location: main_window.php');
+  }
+
   if(isset($_POST['save']) && !empty($_POST['ID']) && !empty($_POST['Name']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
                           && !empty($_POST['Mileage']) && !empty($_POST['Volume']) && !empty($_POST['Power']) && !empty($_POST['Engine_Type']) 
                           && !empty($_POST['Transmission']) && !empty($_POST['Configuration']) && !empty($_POST['Pic1']) && !empty($_POST['Pic2'])
