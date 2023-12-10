@@ -1,12 +1,12 @@
 <!-- Проверка нажата ли кнопка "Добавить автомобиль" -->
 <?php
-  session_start();
+   session_start();
   
-  if($_SESSION['user']['role'] != 1){
-    header('Location: main_window.php');
-  }
-
-  if(isset($_POST['add_car']) && !empty($_POST['ID']) && !empty($_POST['Name']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
+   if($_SESSION['user']['role'] != 1){
+     header('Location: main_window.php');
+   }
+ 
+  if(isset($_POST['add_car']) && !empty($_POST['ID']) && !empty($_POST['Brand']) && !empty($_POST['Model']) && !empty($_POST['Price']) && !empty($_POST['Year']) 
                           && !empty($_POST['Mileage']) && !empty($_POST['Volume']) && !empty($_POST['Power']) && !empty($_POST['Engine_Type']) 
                           && !empty($_POST['Transmission']) && !empty($_POST['Configuration']) ){
     
@@ -26,7 +26,8 @@
 
     $id = $_POST['ID'];
     $ID = $_POST['ID'];
-    $Name = $_POST['Name'];
+    $Brand = $_POST['Brand'];
+    $Model = $_POST['Model'];
     $Price = $_POST['Price'];
     $Year = $_POST['Year'];
     $Mileage = $_POST['Mileage'];
@@ -55,8 +56,8 @@
     }*/
 
 
-    $query = "INSERT INTO CarInfo (ID, Name, Price, Year, Mileage, Volume, Power, Engine_Type, Transmission, Configuration)
-              VALUES ($ID, '$Name', $Price, $Year, $Mileage, $Volume, $Power, '$Engine_Type', '$Transmission', '$Configuration')";
+    $query = "INSERT INTO CarInfo (ID, Brand, Model, Price, Year, Mileage, Volume, Power, Engine_Type, Transmission, Configuration)
+              VALUES ($ID, '$Brand', '$Model', $Price, $Year, $Mileage, $Volume, $Power, '$Engine_Type', '$Transmission', '$Configuration')";
 
     if ($conn->query($query)){
       echo "Данные успешно добавлены в таблицу CarInfo <br />";
@@ -181,8 +182,12 @@
         <td><input type="text" name="ID" id="ID" value="<?php if (!empty($_POST['ID'])) echo $_POST['ID']; else echo '' ?>"></td>
       </tr>
       <tr>
-        <td>Name:</td>
-        <td><input type="text" name="Name" value="<?php if (!empty($_POST['Name'])) echo $_POST['Name']; else echo '' ?>"></td>
+        <td>Brand:</td>
+        <td><input type="text" name="Brand" value="<?php if (!empty($_POST['Brand'])) echo $_POST['Brand']; else echo '' ?>"></td>
+      </tr>
+      <tr>
+        <td>Model:</td>
+        <td><input type="text" name="Model" value="<?php if (!empty($_POST['Model'])) echo $_POST['Model']; else echo '' ?>"></td>
       </tr>
       <tr>
         <td>Price:</td>
