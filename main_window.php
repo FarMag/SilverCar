@@ -1,5 +1,39 @@
 <?php
 session_start();
+
+if (isset($_POST['send_data'])){
+    $db_host = 'localhost';
+    $db_user = 'root';
+    $db_pass = ''; 
+    $db_name = 'SilverCarDB';
+
+    $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+
+    if (!$conn) {
+        die('Ошибка подключения к базе данных:' . mysqli_connect_error());
+    }
+    else{
+        echo "Есть подключение к БД <br />";
+    }
+
+    $Name = $_POST['modal-name'];
+    $Email = $_POST['modal-email'];
+
+    $query = "INSERT INTO Request (User_Name, User_Email)
+              VALUES ('$Name', '$Email')";
+
+    if ($conn->query($query)){
+        header('Location: main_window.php');
+    }
+    else {
+        echo "error";
+    }
+    $conn->close(); 
+}
+
+
+
+
 $host = 'localhost';
 $username = 'root'; 
 $password = '';  
@@ -58,7 +92,7 @@ if ($brandResult && mysqli_num_rows($brandResult) > 0) {
     <option value="">Сначала дороже</option>
 </select><br> -->
 
- <form  action="main_window.html">
+ <form action="" method="POST">
  <div class="selectWrapper">
   <select class="selectBox">
   <option>Сначала старые публикации</option>
@@ -74,11 +108,11 @@ if ($brandResult && mysqli_num_rows($brandResult) > 0) {
                 <span class="close">&times;</span><br><br>
                 <h4>Заполните заявку на обратную связь</h4>
                 <form>
-                    <input type="text" placeholder="Имя*" required>
+                    <input type="text" placeholder="Имя*" name="modal-name" required>
                     <!-- <input type="tel" pattern="+7-[0-9]{3}-[0-9]{3}" required> -->
 
-                    <input type="text" placeholder="Телефон*" required>
-                    <button type="submit">Отправить</button>
+                    <input type="text" placeholder="Email*" name="modal-email" required>
+                    <button type="submit" name="send_data">Отправить</button>
                 </form>
                 </div>
             </div>
@@ -105,7 +139,7 @@ if ($brandResult && mysqli_num_rows($brandResult) > 0) {
         if ($result_pic->num_rows > 0) {
             $row_pic = $result_pic->fetch_assoc();
             $pic = !empty($row_pic['Pic1']) ? $row_pic['Pic1'] : 'images\дефолт\(1).jpg';
-            echo "<img src='$pic' alt='$name' />";
+            echo "<img src='$pic' alt='$brand $model' />";
         } 
         // else {
         //     echo "<img src='images\дефолт\(1).jpg' alt='$name' />";
