@@ -37,10 +37,9 @@ body {
      overflow-x: hidden;
 }
 .container {
-    width: 28%;
-    margin: 20px auto;
+    width: 27%;
     margin-top: 40px;
-    margin-left: 60px;
+    margin-left: 90px;
     Display:inline-block;
 }
 .car {
@@ -153,7 +152,7 @@ button:hover {
     background-color: #ffe390;
 } */
 
-.car .btn-modal-conn{
+/* .car .btn-modal-conn{
     background:#ff9500;
     border:#e08403 solid 1px;
     border-radius:3px;
@@ -165,8 +164,126 @@ button:hover {
     min-width:60px;
     position:relative;
     transition:color .1s ease}
-.btn-modal-conn:hover{background:#e08403}
+.btn-modal-conn:hover{background:#e08403} */
 
+.selectWrapper{
+    border-radius:10px;
+    display:inline-block;
+    overflow:hidden;
+    background:#cccccc;
+    border:1px solid #cccccc;
+    position: relative;
+    margin-left: 100px;
+  }
+  .selectBox{
+    width:270px;
+    height:30px;
+    border:0px;
+    outline:none;
+    background-color: #FFFFFF;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    display: block;
+
+  }
+
+
+
+
+
+
+
+  button[type="submit"] {
+    background-color: #ffcf40;
+    color: white;
+  }
+  
+
+  
+input[type="text"] {
+    width: 90%;
+  }
+  .btn {
+    background:#FFFFFF;
+    border-radius:3px;
+    color:#000000;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+    float: right;
+    border-radius: 10px;
+    Width: 100px;
+    height: 32px;
+    cursor: pointer;
+    transition: 0.5s;
+    display:block;
+    margin-right: 20px;
+}
+.btn:hover {
+    background-color: #ffe390;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 10px;
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+
+
+
+
+
+
+
+
+
+.filter{
+    background:#FFCF40;
+    border-radius:3px;
+    color:#000000;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+    float: right;
+    margin-right: 30px;
+    border-radius: 10px;
+    Width: 100px;
+    height: 32px;
+    cursor: pointer;
+
+}
+/* .sort{
+    text-align: right;
+    font-size: 18px;
+    background-color: #FFCF40;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+} */
 /* #slider_bl .wrapper{max-width:60em;margin:1em auto;position:relative;}
 #slider_bl input{display:none}
 #slider_bl .inner{width:500%;line-height:0}
