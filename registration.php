@@ -116,6 +116,7 @@
                     <li><?= $error ?></li>
                 <?php endforeach; ?>
             </ul>
+            <a class="register" href="/login.php">Уже есть аккаунт? Войдите!</a>
         </form>
     </div>
 </body>
