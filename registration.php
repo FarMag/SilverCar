@@ -30,7 +30,7 @@
 
             $result = $conn->query($query);
             if ($result->num_rows > 0) {
-                $errors[] = 'Пользователь с такой почте уже существует';
+                $errors[] = 'Пользователь с такой почтой уже существует';
             } else {
                 $Name = $_POST['reg-name'];
                 $Email = $_POST['reg-email'];
